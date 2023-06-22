@@ -1,0 +1,21 @@
+1. Вывести ко-во заказов, которое компания Speedy Express доставила в Brazil.
+SELECT
+  COUNT(*) AS OrderCount
+FROM
+  (Orders AS O
+  INNER JOIN Shippers AS S ON O.ShipperID = S.ShipperID)
+  INNER JOIN Customers AS C ON O.CustomerID = C.CustomerID
+WHERE
+  S.ShipperName = 'Speedy Express'
+  AND C.Country = 'Brazil';
+  
+2.На какую сумму было отправлено товаров клиентам в USA
+SELECT
+  SUM(OD.Quantity * P.Price) AS TotalAmount
+FROM
+  ((Orders AS O
+  JOIN Customers AS C ON O.CustomerID = C.CustomerID)
+  JOIN OrderDetails AS OD ON O.OrderID = OD.OrderID)
+  JOIN Products AS P ON OD.ProductID = P.ProductID
+WHERE
+  C.Country = 'USA';
